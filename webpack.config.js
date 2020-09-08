@@ -1,0 +1,42 @@
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const filename = 'tts-player';
+
+module.exports = {
+    entry: {
+        ['js/' + filename]: './src/Main.ts',
+        ['css/' + filename]: './assets/scss/main.scss',
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js',
+        library: 'TtsPlayer',
+        libraryTarget: 'var',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.[jt]sx?$/,
+                use: 'babel-loader',
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader',
+                ],
+            },
+        ],
+    },
+    resolve: {
+        extensions: ['.ts', '.js'],
+    },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin(),
+    ],
+};

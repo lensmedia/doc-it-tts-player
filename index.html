@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Audio Player</title>
+
+        <link rel="stylesheet" href="/css/tts-player.css">
+    </head>
+    <body>
+        <div id="tts-content"></div>
+        <div id="tts-player">
+            <button class="tts-play">Play</button>
+            <button class="tts-pause tts-hidden">Pause</button>
+
+            <div class="tts-volume"></div>
+
+            <div>
+                <div class="tts-time"></div>
+                <div class="tts-duration"></div>
+                <div class="tts-progress"></div>
+            </div>
+        </div>
+
+        <script src="/js/tts-player.js"></script>
+        <script>
+            const doc = 'documents/example';
+            const content = document.getElementById('tts-content');
+            const player = document.getElementById('tts-player');
+
+            async function load(path, options) {
+                const response = await fetch(path, options);
+
+                return response.text();
+            }
+
+            (async (document) => {
+                // Load document fragment (preferably printed before hand in
+                // the php template), this has nothing to do with the player.
+                content.innerHTML = await load(doc + '/fragment.html');
+
+                // Initialize our player thingy majingy.
+                window.ttsp = new TtsPlayer({
+                    player,
+                    content,
+                    document: doc,
+                });
+            })(document);
+        </script>
+    </body>
+</html>
