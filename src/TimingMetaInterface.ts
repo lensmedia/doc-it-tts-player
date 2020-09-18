@@ -1,4 +1,4 @@
-export interface TtsMetaTimingInterface {
+export default interface TimingMetaInterface {
     text: string,
     hash: string,
     start: number,

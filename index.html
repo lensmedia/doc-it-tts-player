@@ -2,15 +2,24 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta name="viewport" content="width=device-width">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
         <title>Audio Player</title>
 
+        <link rel="stylesheet" href="viewer.css">
         <link rel="stylesheet" href="/css/tts-player.css">
     </head>
-    <body>
+
+<!--     <body data-docit-theme="slate">-->
+     <body data-docit-theme="red">
+<!--     <body data-docit-theme="yellow">-->
+<!--     <body data-docit-theme="green">-->
+<!--     <body data-docit-theme="turqoise">-->
+<!--     <body data-docit-theme="lightblue">-->
+<!--     <body data-docit-theme="blue">-->
+<!--     <body data-docit-theme="purple">-->
+<!--     <body data-docit-theme="magenta">-->
         <article id="tts-content">
             <h1 data-tts="1ff0171d465480ee2be2c45463438c124d8081f8">Geldigheid rijbewijs</h1>
             <p>
@@ -43,7 +52,8 @@
             <p>
                 <span data-tts="564486094be26aa2b3087841ca92c97b65c8af80">Heb je een medische aandoening, zoals diabetes, die al bekend is voordat je je rijbewijs haalt?</span>
                 <span data-tts="af279bf1c7f325fcc4d5312b57e6ce6542acfac2">Dan moet je deze aandoening aangeven op de gezondheidsverklaring die je moet indienen voordat je praktijkexamen doet.</span>
-                <span data-tts="af5c0706288eded287fad2f73f066c88bd2f4c13">Dit kun je doen op de <a rel="noopener noreferrer" target="_blank" class="external" href="https://www.cbr.nl/" title="Naar het CBR">site van het CBR</a>.</span></p>
+                <span data-tts="af5c0706288eded287fad2f73f066c88bd2f4c13">Dit kun je doen op de <a rel="noopener noreferrer" target="_blank" class="external" href="https://www.cbr.nl/" title="Naar het CBR">site van het CBR</a>.</span>
+            </p>
 
             <h2 data-tts="40bc0aa36cf6f423aa4d0e9075ffc4bb23f817f8">Geldigheid vanaf 65 jaar leeftijd</h2>
             <p>
@@ -116,25 +126,84 @@
             </ul>
         </article>
 
-        <div id="tts-player">
-            <button class="tts-play">Play</button>
-            <button class="tts-pause tts-hidden">Pause</button>
+        <div id="tts-player" class="tts-player" data-tts-player>
+            <button class="tts-maximize" data-tts-maximize>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                    <path fill="currentColor" d="M124.77,115.39a2.65,2.65,0,0,1,2.17-2.63,12.6,12.6,0,0,0,0-24.83,2.65,2.65,0,0,1-2.17-2.62h0a2.7,2.7,0,0,1,3.12-2.68,18,18,0,0,1,0,35.46,2.71,2.71,0,0,1-3.12-2.69Z"/>
+                    <path fill="currentColor" d="M115.77,146.49c0,5.83-5.11,9.63-9.46,7L62.7,127.35H46.47a7.21,7.21,0,0,1-7.2-7.2V80.55a7.2,7.2,0,0,1,7.2-7.2H62.7l43.61-26.17c4.35-2.6,9.46,1.19,9.46,7Z"/>
+                    <path fill="currentColor" d="M128.44,136.16a3.31,3.31,0,0,1-3.67-3.26,3.21,3.21,0,0,1,2.83-3.23,29.46,29.46,0,0,0,0-58.64,3.22,3.22,0,0,1-2.83-3.23,3.31,3.31,0,0,1,3.67-3.27,36,36,0,0,1,0,71.63Z"/>
+                </svg>
+            </button>
 
-            <div class="tts-volume"></div>
+            <div class="tts-controls">
+                <div class="tts-container">
+                    <button class="tts-previous" data-tts-previous>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                            <path fill="currentColor" d="M162,146.18c0,5.83-5.12,9.63-9.46,7L75.61,107.05A8,8,0,0,1,72,100v46.8a7.2,7.2,0,0,1-7.2,7.2H43.2a7.2,7.2,0,0,1-7.2-7.2V53.24A7.2,7.2,0,0,1,43.2,46H64.8a7.2,7.2,0,0,1,7.2,7.2V100a8,8,0,0,1,3.61-7l76.93-46.15c4.34-2.6,9.46,1.19,9.46,7Z"/>
+                        </svg>
+                    </button>
 
-            <div>
-                <div class="tts-time"></div>
-                <div class="tts-duration"></div>
-                <div class="tts-progress"></div>
+                    <button class="tts-play" data-tts-play>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                            <path fill="currentColor" d="M150.39,107,73.46,153.16c-4.34,2.61-9.46-1.18-9.46-7V53.86c0-5.84,5.12-9.63,9.46-7L150.39,93C155.2,95.87,155.2,104.13,150.39,107Z"/>
+                        </svg>
+                    </button>
+
+                    <button class="tts-pause" data-tts-pause disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                            <rect fill="currentColor" x="46" y="45.9" width="36" height="108" rx="7.2" ry="7.2"/>
+                            <rect fill="currentColor" x="118" y="45.9" width="36" height="108" rx="7.2" ry="7.2"/>
+                        </svg>
+                    </button>
+
+                    <button class="tts-next" data-tts-next>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                            <path fill="currentColor" d="M162,146.7a7.2,7.2,0,0,1-7.2,7.2h-21.6a7.2,7.2,0,0,1-7.2-7.2V99.9a8.06,8.06,0,0,1-3.62,7L45.43,153.06c-4.35,2.61-9.46-1.18-9.46-7V53.76c0-5.84,5.11-9.63,9.46-7l76.92,46.14a8.06,8.06,0,0,1,3.62,7V53.1a7.2,7.2,0,0,1,7.2-7.2h21.6a7.2,7.2,0,0,1,7.2,7.2Z"/>
+                        </svg>
+                    </button>
+
+                    <div class="tts-volume">
+                        <svg class="tts-volume-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                            <path fill="currentColor" d="M124.77,115.39a2.65,2.65,0,0,1,2.17-2.63,12.6,12.6,0,0,0,0-24.83,2.65,2.65,0,0,1-2.17-2.62h0a2.7,2.7,0,0,1,3.12-2.68,18,18,0,0,1,0,35.46,2.71,2.71,0,0,1-3.12-2.69Z"/>
+                            <path fill="currentColor" d="M115.77,146.49c0,5.83-5.11,9.63-9.46,7L62.7,127.35H46.47a7.21,7.21,0,0,1-7.2-7.2V80.55a7.2,7.2,0,0,1,7.2-7.2H62.7l43.61-26.17c4.35-2.6,9.46,1.19,9.46,7Z"/>
+                            <path fill="currentColor" d="M128.44,136.16a3.31,3.31,0,0,1-3.67-3.26,3.21,3.21,0,0,1,2.83-3.23,29.46,29.46,0,0,0,0-58.64,3.22,3.22,0,0,1-2.83-3.23,3.31,3.31,0,0,1,3.67-3.27,36,36,0,0,1,0,71.63Z"/>
+                        </svg>
+
+                        <div class="tts-progress" data-tts-volume>
+                            <div class="tts-progress-bar" data-tts-volume-bar></div>
+                        </div>
+
+                        <div class="tts-volume-percentage" data-tts-volume-percentage></div>
+                    </div>
+
+                    <button class="tts-minimize" data-tts-minimize>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                            <path fill="currentColor" d="M154,89.2v21.6c0,4-3.2,7.2-7.2,7.2H53.2c-4,0-7.2-3.2-7.2-7.2V89.2c0-4,3.2-7.2,7.2-7.2h93.6C150.8,82,154,85.2,154,89.2z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="tts-timing">
+                <div class="tts-container">
+                    <div class="tts-time" data-tts-time></div>
+
+                    <div class="tts-progress" data-tts-progress>
+                        <div class="tts-progress-bar" data-tts-progress-bar></div>
+                    </div>
+
+                    <div class="tts-duration" data-tts-duration></div>
+                </div>
             </div>
         </div>
 
         <script src="/js/tts-player.js"></script>
         <script>
             window.ttsp = new TtsPlayer({
-                player: '#tts-player',
-                content: '#tts-content',
                 document: 'documents/example',
+                ignore: [
+                    '.table',
+                ]
             });
         </script>
     </body>

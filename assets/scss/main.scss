@@ -1,55 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Kufam&display=swap');
+
 $padding: 1em;
+$icon-sizes: $padding * 1.5;
 
-[data-tts]:hover {
-    text-decoration: underline;
-    cursor: pointer;
-    user-select: none;
-}
-
-[data-tts].tts-active {
-    background-color: orange;
-}
-
-.tts-player {
-    display: flex;
-
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-
-    padding: $padding / 2;
-    background-color: orangered;
-}
-
-.tts-hidden {
-    display: none;
-}
-
-.tts-volume,
-.tts-progress {
-    position: relative;
-
-    display: block;
-    width: 5em;
-    height: 1em;
-    cursor: col-resize;
-    background-color: orange;
-
-    white-space: nowrap;
-}
-
-.tts-time,
-.tts-duration {
-    display: inline-block;
-}
-
-.tts-time + .tts-duration::before {
-    content: ' / ';
-}
-
-.tts-progress-bar {
-    background-color: red;
-    position: absolute;
-    left: 0;
-    height: 100%;
-}
+@import 'additional-theme-colors';
+@import 'content';
+@import 'player';

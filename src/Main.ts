@@ -1,1 +1,1 @@
-module.exports = require('./TtsPlayer').default;
+module.exports = require('./Tts').default;

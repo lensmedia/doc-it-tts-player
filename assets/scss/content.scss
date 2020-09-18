@@ -1,0 +1,27 @@
+// Clickable text style.
+[data-tts] {
+    user-select: none;
+}
+
+[data-tts].tts-playable {
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+// Now playing states.
+h1[data-tts].tts-active,
+h2[data-tts].tts-active {
+    color: var(--theme-text);
+}
+
+.tts-active {
+    background-color: rgba(black, .1);
+}
+
+[data-docit-theme="slate"] .tts-active {
+    background-color: rgba($color-slate, .15);
+}

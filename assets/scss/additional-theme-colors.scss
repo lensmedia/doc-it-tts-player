@@ -1,0 +1,71 @@
+$color-slate: #364040;
+
+:root {
+    --color-slate-previous: gray;
+    --color-slate-next: darkgray;
+
+    --color-red-previous: var(--color-magenta);
+    --color-red-next: var(--color-yellow);
+
+    --color-yellow-previous: var(--color-red);
+    --color-yellow-next: var(--color-green);
+
+    --color-green-previous: var(--color-yellow);
+    --color-green-next: var(--color-turqoise);
+
+    --color-turqoise-previous: var(--color-green);
+    --color-turqoise-next: var(--color-lightblue);
+
+    --color-lightblue-previous: var(--color-turqoise);
+    --color-lightblue-next: var(--color-blue);
+
+    --color-blue-previous: var(--color-lightblue);
+    --color-blue-next: var(--color-purple);
+
+    --color-purple-previous: var(--color-blue);
+    --color-purple-next: var(--color-magenta);
+
+    --color-magenta-previous: var(--color-purple);
+    --color-magenta-next: var(--color-red);
+}
+
+@mixin create-theme($previous: null, $next: null) {
+    --theme-previous: #{$previous};
+    --theme-next: #{$next};
+}
+
+[data-docit-theme="slate"] {
+    @include create-theme(var(--color-slate-previous), var(--color-slate-next));
+}
+
+[data-docit-theme="red"] {
+    @include create-theme(var(--color-red-previous), var(--color-red-next));
+}
+
+[data-docit-theme="yellow"] {
+    @include create-theme(var(--color-yellow-previous), var(--color-yellow-next));
+}
+
+[data-docit-theme="green"] {
+    @include create-theme(var(--color-green-previous), var(--color-green-next));
+}
+
+[data-docit-theme="turqoise"] {
+    @include create-theme(var(--color-turqoise-previous), var(--color-turqoise-next));
+}
+
+[data-docit-theme="lightblue"] {
+    @include create-theme(var(--color-lightblue-previous), var(--color-lightblue-next));
+}
+
+[data-docit-theme="blue"] {
+    @include create-theme(var(--color-blue-previous), var(--color-blue-next));
+}
+
+[data-docit-theme="purple"] {
+    @include create-theme(var(--color-purple-previous), var(--color-purple-next));
+}
+
+[data-docit-theme="magenta"] {
+    @include create-theme(var(--color-magenta-previous), var(--color-magenta-next));
+}
