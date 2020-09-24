@@ -1,7 +1,6 @@
 {
   "name": "doc-it-audio-player",
   "version": "1.0.0",
-  "description": "",
   "main": "dist/tts-player.js",
   "keywords": [],
   "author": "",
