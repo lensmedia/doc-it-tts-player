@@ -26,6 +26,7 @@ export default class Player {
         classes: {
             minimized: 'tts-minimized',
             maximized: 'tts-maximized',
+            loading: 'tts-loading',
         },
         controls: {
             minimize: '[data-tts-minimize]',
@@ -43,6 +44,50 @@ export default class Player {
             progressBar: '[data-tts-progress-bar]',
         },
     };
+
+    private _loading: HTMLElement = undefined;
+
+    private set loading(value: HTMLElement) {
+        this.player.classList.toggle(this.options.classes.loading, !!value);
+
+        if (undefined !== this._loading) {
+            this._loading.classList.remove(this.options.classes.loading);
+        }
+
+        if (value) {
+            value.classList.add(this.options.classes.loading);
+        }
+
+        this._loading = value;
+    };
+
+    private set maximized(value: boolean) {
+        if (this.loading === this.maximize) {
+            return;
+        }
+
+        if (value && !this.audio) {
+            this.loading = this.maximize;
+
+            this.tts.initialize().then(() => {
+                this.storage.set('player-maximized', value);
+
+                this.player.classList.toggle(this.options.classes.minimized, !value);
+                this.player.classList.toggle(this.options.classes.maximized, value);
+
+                this.loading = undefined;
+            });
+        } else {
+            this.storage.set('player-maximized', value);
+
+            this.player.classList.toggle(this.options.classes.minimized, !value);
+            this.player.classList.toggle(this.options.classes.maximized, value);
+        }
+    }
+
+    private get maximized(): boolean {
+        return this.storage.get('player-maximized', false);
+    }
 
     // Control fields.
     private minimize: HTMLElement;
@@ -73,14 +118,6 @@ export default class Player {
         this.player = element;
         this.bind(this.player, 'mousedown touchstart', this.onProgressDragEvents);
 
-        if (this.storage.get('player-maximized')) {
-            this.player.classList.add(this.options.classes.maximized);
-        }
-
-        if (!this.player.classList.contains(this.options.classes.maximized)) {
-            this.player.classList.add(this.options.classes.minimized);
-        }
-
         // Do some controls loading.
         this.initializeMinimizeButton();
         this.initializeMaximizeButton();
@@ -98,35 +135,17 @@ export default class Player {
         this.bind(window, 'mousemove touchmove', this.onProgressDragEvents, false);
         this.bind(window, 'mouseup touchend', this.onProgressDragEvents);
 
-        // Wrapped in set timeout to make it trigger after constructor has
-        // finished in our tts class.
-        if (this.storage.get('player-maximized') && !this.audio) {
-            setTimeout(() => this.tts.initialize());
-        }
+        this.maximized = this.storage.get('player-maximized', false);
     }
 
     public initializeMinimizeButton() {
         this.minimize = selectorArgToElement(this.options.controls.minimize, this.player);
-        this.bind(this.minimize, 'click', async e => {
-            this.storage.set('player-maximized', false);
-
-            this.player.classList.add(this.options.classes.minimized);
-            this.player.classList.remove(this.options.classes.maximized);
-        });
+        this.bind(this.minimize, 'click', () => this.maximized = false);
     }
 
     public initializeMaximizeButton() {
         this.maximize = selectorArgToElement(this.options.controls.maximize, this.player);
-        this.bind(this.maximize, 'click', async e => {
-            if (!this.audio) {
-                await this.tts.initialize();
-            }
-
-            this.storage.set('player-maximized', true);
-
-            this.player.classList.add(this.options.classes.maximized);
-            this.player.classList.remove(this.options.classes.minimized);
-        });
+        this.bind(this.maximize, 'click', () => this.maximized = true);
     }
 
     public initializePlayButton() {
@@ -219,6 +238,9 @@ export default class Player {
         this.bind(audio, 'play', () => this.updatePlayingState(true));
         this.bind(audio, 'pause', () => this.updatePlayingState(false));
         this.bind(audio, 'ended', () => this.updatePlayingState(false));
+
+        this.bind(audio, 'seeking', () => this.loading = this.progress);
+        this.bind(audio, 'seeked', () => this.loading = undefined);
 
         this.bind(audio, 'timeupdate', this.onTimeUpdate);
         this.onTimeUpdate();

@@ -40,6 +40,14 @@
         }
     }
 
+    &.tts-loading {
+        &,
+        button,
+        .tts-progress {
+            cursor: wait !important;
+        }
+    }
+
     &,
     * {
         box-sizing: border-box;
@@ -66,6 +74,11 @@
     svg {
         width: $icon-sizes;
         height: $icon-sizes;
+
+        @media (min-width: $container-width) {
+            width: $icon-sizes-large;
+            height: $icon-sizes-large;
+        }
     }
 
     button {
@@ -89,7 +102,7 @@
 .tts-container {
     display: flex;
     align-items: center;
-    max-width: 40em;
+    max-width: $container-width;
     padding: 0 $padding;
     width: 100%;
     margin: 0 auto;
@@ -136,8 +149,13 @@
 .tts-play,
 .tts-pause {
     svg {
-        width: 3em;
-        height: 3em;
+        width: $icon-sizes * 2;
+        height: $icon-sizes * 2;
+
+        @media (min-width: $container-width) {
+            width: $icon-sizes-large * 2;
+            height: $icon-sizes-large * 2;
+        }
     }
 }
 
@@ -168,18 +186,20 @@
     border-radius: 999px;
 }
 
+$progress-bar-size: 12px;
+
 .tts-progress {
     position: relative;
     flex-grow: 1;
 
-    padding: 3px;
+    padding: $progress-bar-size / 2;
     cursor: e-resize;
 
     &-bar {
         position: absolute;
 
-        height: 6px;
-        min-width: 6px;
+        height: $progress-bar-size;
+        min-width: $progress-bar-size;
 
         opacity: .8;
 
@@ -205,7 +225,7 @@
     margin: $padding / 4 $padding;
 
     background-color: rgba(white, .25);
-    border-radius: .5em;
+    border-radius: 999px;
 }
 
 .tts-volume-percentage {
@@ -219,4 +239,86 @@
 
 .tts-progress {
     justify-content: center;
+}
+
+$loading-animation-duration: 2s;
+.tts-progress.tts-loading,
+.tts-maximize.tts-loading {
+    &::after,
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        opacity: 0;
+
+        border-radius: 999px;
+    }
+
+    &::after {
+        animation-delay: 0s;
+        background-color: var(--theme-previous);
+        background-image: linear-gradient(to right, var(--theme-next), var(--theme-previous));
+    }
+
+    &::before {
+        animation-delay: -($loading-animation-duration / 2);
+        background-color: var(--theme-next);
+        background-image: linear-gradient(to right, var(--theme-previous), var(--theme-next));
+    }
+}
+
+.tts-maximize.tts-loading {
+    &::after,
+    &::before {
+        animation: tts-maximize-loading ease-in-out infinite $loading-animation-duration;
+    }
+}
+
+.tts-progress.tts-loading {
+    &::before,
+    &::after {
+        animation: tts-progress-loading ease-in-out infinite $loading-animation-duration / 2;
+
+        animation-delay: ($loading-animation-duration / 4);
+    }
+
+    &::after {
+        animation-delay: 0s;
+    }
+}
+
+@keyframes tts-maximize-loading {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes tts-progress-loading {
+    0% {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+
+    25% {
+        opacity: .4;
+    }
+
+    100% {
+        transform: scaleY(2);
+        opacity: 0;
+    }
 }

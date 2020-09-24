@@ -35,6 +35,9 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js'],
     },
+    devServer: {
+        host: '0.0.0.0',
+    },
     plugins: [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin(),

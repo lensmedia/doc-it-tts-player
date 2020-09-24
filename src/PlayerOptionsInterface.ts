@@ -5,6 +5,7 @@ export default interface PlayerOptionsInterface {
     classes?: {
         minimized?: string,
         maximized?: string,
+        loading?: string,
     },
     controls?: {
         minimize?: CssSelector,

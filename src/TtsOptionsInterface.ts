@@ -45,5 +45,4 @@ export default interface TtsOptionsInterface {
      * use single click/tap instead.
      */
     // doubleClickDuration: number
-
 }
