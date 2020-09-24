@@ -1,5 +1,5 @@
 {
-  "name": "doc-it-audio-player",
+  "name": "doc-it-tts-player",
   "version": "1.0.0",
   "main": "dist/tts-player.js",
   "keywords": [],
