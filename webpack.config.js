@@ -23,10 +23,11 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.scss$/,
+                test: /\.s?css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
+                    'postcss-loader',
                     'sass-loader',
                 ],
             },

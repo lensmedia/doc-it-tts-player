@@ -55,8 +55,7 @@
         user-select: none;
     }
 
-    &,
-    .tts-progress-bar {
+    & {
         color: var(--theme-background);
 
         @include beforeAfterBGGlow {
@@ -197,23 +196,26 @@ $progress-bar-size: 12px;
 
     &-bar {
         position: absolute;
-
+        left: 0;
+        top: 50%;
         height: $progress-bar-size;
         min-width: $progress-bar-size;
 
         opacity: .8;
+        border-radius: 999px;
+        background-color: var(--theme-accent);
+        background-image:
+            radial-gradient(circle at -50% -50%, var(--theme-next), transparent 75%),
+            radial-gradient(circle at center center, var(--theme-accent), transparent 100%),
+            radial-gradient(circle at 150% 100%, var(--theme-previous), transparent 75%);
 
-        left: 0;
-        top: 50%;
         transform: translateY(-50%);
     }
 }
 
 .tts-volume .tts-progress-bar {
-    @include beforeAfterBGGlow {
-        background-color: var(--theme-background);
-        background-image: linear-gradient(to right, var(--theme-bright), transparent);
-    }
+    background-color: var(--theme-background);
+    background-image: none;
 }
 
 .tts-volume {
@@ -225,7 +227,6 @@ $progress-bar-size: 12px;
     margin: $padding / 4 $padding;
 
     background-color: rgba(white, .25);
-    border-radius: 999px;
 }
 
 .tts-volume-percentage {
@@ -235,10 +236,6 @@ $progress-bar-size: 12px;
 
 .tts-volume-icon {
     opacity: .5;
-}
-
-.tts-progress {
-    justify-content: center;
 }
 
 $loading-animation-duration: 2s;
