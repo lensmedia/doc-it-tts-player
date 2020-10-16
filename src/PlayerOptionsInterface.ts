@@ -16,6 +16,7 @@ export default interface PlayerOptionsInterface {
         next?: CssSelector,
         time?: CssSelector,
         duration?: CssSelector,
+        volumeWrapper?: CssSelector,
         volume?: CssSelector,
         volumeBar?: CssSelector,
         volumePercentage?: CssSelector,

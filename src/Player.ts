@@ -35,6 +35,7 @@ export default class Player {
             pause: '[data-tts-pause]',
             previous: '[data-tts-previous]',
             next: '[data-tts-next]',
+            volumeWrapper: '[data-tts-volume-wrapper]',
             volume: '[data-tts-volume]',
             volumeBar: '[data-tts-volume-bar]',
             volumePercentage: '[data-tts-volume-percentage]',
@@ -96,6 +97,7 @@ export default class Player {
     private pause: HTMLElement;
     private previous: HTMLElement;
     private next: HTMLElement;
+    private volumeWrapper: HTMLElement;
     private volume: HTMLElement;
     private volumeBar: HTMLElement;
     private volumePercentage: HTMLElement;
@@ -116,7 +118,6 @@ export default class Player {
         element.dataset.ttsPlayer = '';
 
         this.player = element;
-        this.bind(this.player, 'mousedown touchstart', this.onProgressDragEvents);
 
         // Do some controls loading.
         this.initializeMinimizeButton();
@@ -127,10 +128,9 @@ export default class Player {
         this.initializeNextButton();
         this.initializeTimeDisplay();
         this.initializeDurationDisplay();
-        this.initializeVolumeDisplay();
 
-        // Volume/progress bar drag events.
-        this.initializeVolumeProgressBar();
+        this.initializeVolume();
+
         this.initializeProgressProgressBar();
         this.bind(window, 'mousemove touchmove', this.onProgressDragEvents, false);
         this.bind(window, 'mouseup touchend', this.onProgressDragEvents);
@@ -213,6 +213,10 @@ export default class Player {
 
     public initializeDurationDisplay() {
         this.duration = selectorArgToElement(this.options.controls.duration, this.player);
+    }
+
+    public initializeVolumeWrapper() {
+        this.volumeWrapper = selectorArgToElement(this.options.controls.volumeWrapper, this.player);
     }
 
     public initializeVolumeDisplay() {
@@ -342,19 +346,6 @@ export default class Player {
         }
     }
 
-    private updatePlayingState(playing: boolean) {
-        this.player.classList.toggle('playing', playing);
-        this.player.classList.toggle('paused', !playing);
-
-        if (this.play instanceof HTMLButtonElement) {
-            this.play.disabled = playing;
-        }
-
-        if (this.pause instanceof HTMLButtonElement) {
-            this.pause.disabled = !playing;
-        }
-    }
-
     private onProgressDragEvents(event: MouseEvent | TouchEvent) {
         event.stopPropagation();
 
@@ -380,12 +371,63 @@ export default class Player {
 
         const rect = this.dragging.getBoundingClientRect();
         const coords = eventCoords(event);
-        const value = clamp((coords.pageX - rect.left) / (rect.right - rect.left), 0, 1);
+        const value = clamp((coords.pageX - rect.left) / (rect.right - rect.left));
 
         if (this.dragging === this.volume) {
             this.audio.volume = value;
         } else if (this.dragging === this.progress) {
             this.audio.currentTime = value * this.audio.duration;
         }
+    }
+
+    private updatePlayingState(playing: boolean) {
+        this.player.classList.toggle('playing', playing);
+        this.player.classList.toggle('paused', !playing);
+
+        if (this.play instanceof HTMLButtonElement) {
+            this.play.disabled = playing;
+        }
+
+        if (this.pause instanceof HTMLButtonElement) {
+            this.pause.disabled = !playing;
+        }
+    }
+
+    /**
+     * Thanks iOS.
+     */
+    private canVolumeBeChanged() {
+        const audio = new Audio();
+        if (!audio) {
+            return Promise.reject(false);
+        }
+
+        audio.volume = 1;
+
+        return new Promise((resolve, reject) => {
+            const timeout = setTimeout(_ => reject(false), 100);
+
+            audio.addEventListener('volumechange', _ => {
+                clearTimeout(timeout);
+
+                resolve(audio.volume === 0);
+            });
+
+            audio.volume = 0;
+        });
+    }
+
+    private initializeVolume() {
+        this.initializeVolumeWrapper();
+        this.initializeVolumeDisplay();
+        this.initializeVolumeProgressBar();
+
+        this.canVolumeBeChanged().then(() => {
+            if (!this.volumeWrapper.hidden) {
+                return;
+            }
+
+            this.volumeWrapper.hidden = false;
+        });
     }
 }

@@ -96,6 +96,10 @@
             cursor: not-allowed;
         }
     }
+
+    [hidden] {
+        display: none !important;
+    }
 }
 
 .tts-container {
@@ -132,6 +136,7 @@
 .tts-player .tts-minimize {
     background-color: rgba(white, .25);
     border-radius: 999px;
+    margin-left: auto;
 }
 
 .tts-timing {
