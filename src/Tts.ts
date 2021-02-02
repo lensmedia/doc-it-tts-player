@@ -20,7 +20,7 @@ export default class Tts {
             active: 'tts-active',
         },
         document: '',
-        tts: 'tts.json',
+        tts: 'meta.json',
         ignore: [],
         scrollToActiveLine: true,
         enableClickableLines: true,
@@ -62,9 +62,10 @@ export default class Tts {
         const response = await fetch(file);
         const json = await response.json();
 
-        this.tts = json;
+        this.tts = json.tts;
+        console.info('loaded metadata', this.tts);
 
-        this.audio.src = this.options.document + '/' + json.file;
+        this.audio.src = this.options.document + '/' + this.tts.file;
     }
 
     private initializeContentContainer(content: CssSelector): HTMLElement {
@@ -278,7 +279,7 @@ export default class Tts {
     }
 
     private onError(event: Event) {
-        console.log(event);
+        console.error(event);
     }
 
     private elementForTtsItem(item: TimingMetaInterface): HTMLElement {
