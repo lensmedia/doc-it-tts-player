@@ -11,12 +11,12 @@ $color-slate: #364040;
     --color-yellow-next: var(--color-green);
 
     --color-green-previous: var(--color-yellow);
-    --color-green-next: var(--color-turqoise);
+    --color-green-next: var(--color-turquoise);
 
-    --color-turqoise-previous: var(--color-green);
-    --color-turqoise-next: var(--color-lightblue);
+    --color-turquoise-previous: var(--color-green);
+    --color-turquoise-next: var(--color-lightblue);
 
-    --color-lightblue-previous: var(--color-turqoise);
+    --color-lightblue-previous: var(--color-turquoise);
     --color-lightblue-next: var(--color-blue);
 
     --color-blue-previous: var(--color-lightblue);
@@ -50,8 +50,8 @@ $color-slate: #364040;
     @include create-theme(var(--color-green-previous), var(--color-green-next));
 }
 
-[data-docit-theme="turqoise"] {
-    @include create-theme(var(--color-turqoise-previous), var(--color-turqoise-next));
+[data-docit-theme="turquoise"] {
+    @include create-theme(var(--color-turquoise-previous), var(--color-turquoise-next));
 }
 
 [data-docit-theme="lightblue"] {
