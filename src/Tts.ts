@@ -63,8 +63,6 @@ export default class Tts {
         const json = await response.json();
 
         this.tts = json.tts;
-        console.info('loaded metadata', this.tts);
-
         this.audio.src = this.options.document + '/' + this.tts.file;
     }
 
@@ -83,10 +81,10 @@ export default class Tts {
         this.audio.volume = this.storage.get('volume', 1);
         this.audio.addEventListener('volumechange', () => this.storage.set('volume', this.audio.volume));
 
-        this.audio.addEventListener('timeupdate', this.onTimeUpdate.bind(this));
-        this.audio.addEventListener('error', this.onError.bind(this));
+        this.audio.addEventListener('timeupdate', this.onTimeUpdate.bind(this)());
+        this.audio.addEventListener('error', this.onError.bind(this)());
 
-        this.audio.addEventListener('loadedmetadata', event => this.bindClickableLines.bind(this));
+        this.audio.addEventListener('loadedmetadata', event => this.bindClickableLines.bind(this)());
 
         return this.audio;
     }
@@ -117,7 +115,7 @@ export default class Tts {
             element.dataset.ttsIndex = i.toString();
             // element.tabIndex = i; // in case we do something with tabs.
             element.classList.add(this.options.classes.playable);
-            element.addEventListener('click', this.onTtsItemClick.bind(this));
+            element.addEventListener('click', this.onTtsItemClick.bind(this)());
 
             // Stop link clicks from also playing the line.
             const links = element.querySelectorAll('a[href]');
