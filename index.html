@@ -9,6 +9,28 @@
 
         <link rel="stylesheet" href="viewer.css">
         <link rel="stylesheet" href="/css/tts-player.css">
+
+        <base href="/documents/example/" />
+
+        <style>
+            /* some custom css to get the content formatted properly but this is
+             up to where it is being used */
+
+            *{
+                box-sizing: border-box;
+            }
+
+            html {
+                font-family: Mulish, sans-serif;
+                font-size: 16px;
+            }
+
+            #tts-content {
+                max-width: 45em;
+                margin: 0 auto;
+                padding: 6em 1em;
+            }
+        </style>
     </head>
 
 <!--     <body data-docit-theme="slate">-->
@@ -95,7 +117,7 @@
 
         <script src="/js/tts-player.js"></script>
         <script>
-            const doc = 'documents/example';
+            const doc = '/documents/example';
 
             fetch(doc + '/fragment.html')
                 .then(response => response.text())
