@@ -1,6 +1,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const filename = 'tts-player';
 
@@ -13,7 +14,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
         library: 'TtsPlayer',
-        libraryTarget: 'var',
+        libraryTarget: 'window',
     },
     module: {
         rules: [
@@ -33,12 +34,17 @@ module.exports = {
             },
         ],
     },
+    optimization: {
+        minimizer: [
+            new CssMinimizerPlugin(),
+        ],
+    },
     resolve: {
         extensions: ['.ts', '.js'],
     },
+    devtool: 'source-map',
     devServer: {
         host: '0.0.0.0',
-        disableHostCheck: true,
     },
     plugins: [
         new CleanWebpackPlugin(),

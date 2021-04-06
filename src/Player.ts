@@ -293,7 +293,7 @@ export default class Player {
         return this;
     }
 
-    private onTimeUpdate(event?: Event) {
+    private onTimeUpdate() {
         if (!this.time) {
             return;
         }
@@ -320,7 +320,7 @@ export default class Player {
         }
     }
 
-    private onDurationChange(event?: Event) {
+    private onDurationChange() {
         if (!this.duration) {
             return;
         }
@@ -332,7 +332,7 @@ export default class Player {
         this.duration.innerText = formatTime(this.audio && this.audio.duration || 0);
     }
 
-    private onVolumeChange(event?: Event) {
+    private onVolumeChange() {
         if (!this.audio) {
             return;
         }

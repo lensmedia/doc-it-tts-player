@@ -1,6 +1,6 @@
 export default class Storage {
-    private available: boolean;
-    private prefix: string;
+    private readonly available: boolean;
+    private readonly prefix: string;
 
     constructor(prefix: string = '') {
         this.prefix = prefix;

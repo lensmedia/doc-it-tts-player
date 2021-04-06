@@ -33,6 +33,7 @@ export default class Tts {
     public storage = new Storage('tts-');
 
     public tts: MetaInterface;
+
     public get timing() {
         return this.tts && this.tts.timing;
     }
@@ -64,6 +65,21 @@ export default class Tts {
 
         this.tts = json.tts;
         this.audio.src = this.options.document + '/' + this.tts.file;
+
+        for (let i = 0; i < this.timing.length; i++) {
+            const timing = this.timing[i];
+            const selector = `[data-tts="${timing.hash}"]:not([data-tts-index])`;
+            const el = document.querySelector<HTMLElement>(selector);
+
+            if (!el) {
+                throw new Error('Timing list and document content do not match.');
+            }
+
+            timing.index = i;
+            timing.element = el;
+
+            el.dataset.ttsIndex = i.toString();
+        }
     }
 
     private initializeContentContainer(content: CssSelector): HTMLElement {
@@ -103,22 +119,20 @@ export default class Tts {
             return;
         }
 
-        const elements = this.content.querySelectorAll('[data-tts]');
+        const elements = this.content.querySelectorAll<HTMLElement>('[data-tts]');
         for (let i = 0; i < elements.length; i++) {
-            const element: HTMLElement = <HTMLElement>elements[i];
+            const element: HTMLElement = elements[i];
             element.classList.remove(this.options.classes.playable);
 
             if (this.ignore && element.matches(this.ignore)) {
                 continue;
             }
 
-            element.dataset.ttsIndex = i.toString();
-            // element.tabIndex = i; // in case we do something with tabs.
             element.classList.add(this.options.classes.playable);
             element.addEventListener('click', this.onTtsItemClick.bind(this));
 
             // Stop link clicks from also playing the line.
-            const links = element.querySelectorAll('a[href]');
+            const links = element.querySelectorAll<HTMLAnchorElement>('a[href]');
             for (let j = 0; j < links.length; j++) {
                 links[j].addEventListener('click', e => e.stopPropagation());
             }
@@ -203,7 +217,7 @@ export default class Tts {
         this.activeTtsItem = item;
     }
 
-    private onTimeUpdate(event: Event) {
+    private onTimeUpdate() {
         let ignored = false;
         let activeTtsItem: TimingMetaInterface | undefined = undefined;
 
@@ -281,11 +295,11 @@ export default class Tts {
     }
 
     private elementForTtsItem(item: TimingMetaInterface): HTMLElement {
-        return document.querySelector('[data-tts="' + item.hash + '"]');
+        return document.querySelector<HTMLElement>('[data-tts="' + item.hash + '"][data-tts-index="' + item.index + '"]');
     }
 
     private ttsItemForElement(element: HTMLElement): TimingMetaInterface {
-        return this.timing.find(i => i.hash === element.dataset.tts);
+        return this.timing.find(i => i.hash === element.dataset.tts && i.index === parseInt(element.dataset.ttsIndex));
     }
 
     private updateScrollPosition(element: HTMLElement) {
