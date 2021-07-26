@@ -34,38 +34,38 @@
     --theme-next: #{$next};
 }
 
-[data-docit-theme="slate"] {
+[data-doc-it-theme="slate"] {
     @include create-theme(var(--color-slate-previous), var(--color-slate-next));
 }
 
-[data-docit-theme="red"] {
+[data-doc-it-theme="red"] {
     @include create-theme(var(--color-red-previous), var(--color-red-next));
 }
 
-[data-docit-theme="yellow"] {
+[data-doc-it-theme="yellow"] {
     @include create-theme(var(--color-yellow-previous), var(--color-yellow-next));
 }
 
-[data-docit-theme="green"] {
+[data-doc-it-theme="green"] {
     @include create-theme(var(--color-green-previous), var(--color-green-next));
 }
 
-[data-docit-theme="turquoise"] {
+[data-doc-it-theme="turquoise"] {
     @include create-theme(var(--color-turquoise-previous), var(--color-turquoise-next));
 }
 
-[data-docit-theme="lightblue"] {
+[data-doc-it-theme="lightblue"] {
     @include create-theme(var(--color-lightblue-previous), var(--color-lightblue-next));
 }
 
-[data-docit-theme="blue"] {
+[data-doc-it-theme="blue"] {
     @include create-theme(var(--color-blue-previous), var(--color-blue-next));
 }
 
-[data-docit-theme="purple"] {
+[data-doc-it-theme="purple"] {
     @include create-theme(var(--color-purple-previous), var(--color-purple-next));
 }
 
-[data-docit-theme="magenta"] {
+[data-doc-it-theme="magenta"] {
     @include create-theme(var(--color-magenta-previous), var(--color-magenta-next));
 }

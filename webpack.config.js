@@ -1,18 +1,15 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
-const filename = 'tts-player';
-
 module.exports = {
     entry: {
-        ['js/' + filename]: './src/Main.ts',
-        ['css/' + filename]: './assets/scss/main.scss',
+        js: './src/Main.ts',
+        css: './assets/scss/main.scss',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js',
+        filename: '[name]/tts-player.js',
         library: 'TtsPlayer',
         libraryTarget: 'window',
     },
@@ -25,18 +22,42 @@ module.exports = {
             },
             {
                 test: /\.s?css$/,
+                exclude: /node_modules/,
                 use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader',
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            // bit ugly but it is to keep it relative to the
+                            // assets/... folder instead of to the root.
+                            publicPath: '../../'
+                        }
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: { sourceMap: true },
+                    },
+                    { loader: 'postcss-loader' },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true,
+                        },
+                    },
                 ],
             },
         ],
     },
     optimization: {
         minimizer: [
-            new CssMinimizerPlugin(),
+            '...',
+            new CssMinimizerPlugin({
+                minimizerOptions: {
+                    preset: [
+                        'default',
+                        { calc: false },
+                    ]
+                }
+            }),
         ],
     },
     resolve: {
@@ -47,7 +68,8 @@ module.exports = {
         host: '0.0.0.0',
     },
     plugins: [
-        new CleanWebpackPlugin(),
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: 'css/tts-player.css',
+        }),
     ],
 };
