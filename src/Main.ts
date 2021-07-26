@@ -1,1 +1,3 @@
-module.exports = require('./Tts').default;
+import Tts from './Tts';
+
+export default Tts;

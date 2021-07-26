@@ -11,7 +11,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name]/tts-player.js',
         library: 'TtsPlayer',
-        libraryTarget: 'window',
+        libraryTarget: 'umd',
     },
     module: {
         rules: [
