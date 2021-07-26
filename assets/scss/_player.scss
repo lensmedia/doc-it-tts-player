@@ -25,11 +25,12 @@
 // Tts player styling.
 .tts-player {
     position: fixed;
+    z-index: 1;
 
     bottom: $padding;
     right: $padding;
 
-    font-family: 'Kufam', sans-serif;
+    font-family: Kufam, Mulish;
 
     &.tts-maximized {
         bottom: 0;
@@ -198,7 +199,7 @@ $progress-bar-size: 12px;
     position: relative;
     flex-grow: 1;
 
-    padding: $progress-bar-size / 2;
+    padding: $progress-bar-size * .5;
     cursor: e-resize;
 
     &-bar {
@@ -230,15 +231,15 @@ $progress-bar-size: 12px;
     align-items: center;
     flex-grow: 1;
 
-    padding: 0 ($padding / 4);
-    margin: $padding / 4 $padding;
+    padding: 0 ($padding * .25);
+    margin: $padding * .25 $padding;
 
     background-color: rgba(white, .25);
 }
 
 .tts-volume-percentage {
     font-size: .6em;
-    margin: 0 $padding / 2;
+    margin: 0 $padding * .5;
 }
 
 .tts-volume-icon {
@@ -269,7 +270,7 @@ $loading-animation-duration: 2s;
     }
 
     &::before {
-        animation-delay: -($loading-animation-duration / 2);
+        animation-delay: -($loading-animation-duration * .5);
         background-color: var(--theme-next);
         background-image: linear-gradient(to right, var(--theme-previous), var(--theme-next));
     }
@@ -285,9 +286,9 @@ $loading-animation-duration: 2s;
 .tts-progress.tts-loading {
     &::before,
     &::after {
-        animation: tts-progress-loading ease-in-out infinite $loading-animation-duration / 2;
+        animation: tts-progress-loading ease-in-out infinite $loading-animation-duration * .5;
 
-        animation-delay: ($loading-animation-duration / 4);
+        animation-delay: ($loading-animation-duration * .25);
     }
 
     &::after {

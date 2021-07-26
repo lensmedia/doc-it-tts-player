@@ -15,15 +15,11 @@
 }
 
 // Now playing states.
-h1[data-tts].tts-active,
-h2[data-tts].tts-active {
-    color: var(--theme-text);
-}
-
 .tts-active {
+    color: var(--theme-text);
     background-color: rgba(black, .1);
 }
 
-[data-docit-theme="slate"] .tts-active {
+[data-doc-it-theme="slate"] .tts-active {
     background-color: rgba($color-slate, .15);
 }

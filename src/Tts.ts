@@ -95,14 +95,24 @@ export default class Tts {
         this.audio = new Audio(source);
 
         this.audio.volume = this.storage.get('volume', 1);
-        this.audio.addEventListener('volumechange', () => this.storage.set('volume', this.audio.volume));
+        this.audio.addEventListener('volumechange', this.onVolumeChange.bind(this));
 
         this.audio.addEventListener('timeupdate', this.onTimeUpdate.bind(this));
         this.audio.addEventListener('error', this.onError.bind(this));
+        this.audio.addEventListener('ended', this.onEnded.bind(this));
 
-        this.audio.addEventListener('loadedmetadata', this.bindClickableLines.bind(this));
+        this.audio.addEventListener('loadedmetadata', this.onLoadedMetaData.bind(this));
 
         return this.audio;
+    }
+
+    private onLoadedMetaData(event) {
+        const callback = this.options?.events?.onLoadedMetaData;
+        if (callback && typeof(callback) === 'function') {
+            callback(event, this);
+        }
+
+        this.bindClickableLines();
     }
 
     /**
@@ -217,7 +227,12 @@ export default class Tts {
         this.activeTtsItem = item;
     }
 
-    private onTimeUpdate() {
+    private onTimeUpdate(event) {
+        const callback = this.options?.events?.onTimeUpdate;
+        if (callback && typeof(callback) === 'function') {
+            callback(event, this);
+        }
+
         let ignored = false;
         let activeTtsItem: TimingMetaInterface | undefined = undefined;
 
@@ -290,8 +305,29 @@ export default class Tts {
         return previous;
     }
 
+    private onVolumeChange(event) {
+        const callback = this.options?.events?.onVolumeChange;
+        if (callback && typeof(callback) === 'function') {
+            callback(event, this);
+        }
+
+        this.storage.set('volume', this.audio.volume);
+    }
+
     private onError(event: Event) {
+        const callback = this.options?.events?.onError;
+        if (callback && typeof(callback) === 'function') {
+            callback(event, this);
+        }
+
         console.error(event);
+    }
+
+    private onEnded(event: Event) {
+        const callback = this.options?.events?.onEnded;
+        if (callback && typeof(callback) === 'function') {
+            callback(event, this);
+        }
     }
 
     private elementForTtsItem(item: TimingMetaInterface): HTMLElement {

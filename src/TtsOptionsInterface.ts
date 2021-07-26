@@ -45,4 +45,16 @@ export default interface TtsOptionsInterface {
      * use single click/tap instead.
      */
     // doubleClickDuration: number
+
+    /**
+     * Some triggerable events, events are called before player actions are performed
+     * and can be used to cancel updates by returning false from your callbacks.
+     */
+    events?: {
+        onTimeUpdate?: (event, player) => boolean,
+        onEnded?: (event, player) => boolean,
+        onError?: (event, player) => boolean,
+        onLoadedMetaData?: (event, player) => boolean,
+        onVolumeChange?: (event, player) => boolean,
+    },
 }
