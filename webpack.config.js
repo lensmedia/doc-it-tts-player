@@ -10,8 +10,9 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name]/tts-player.js',
-        library: 'TtsPlayer',
         libraryTarget: 'umd',
+        globalObject: 'this',
+        library: 'TtsPlayer',
     },
     module: {
         rules: [
