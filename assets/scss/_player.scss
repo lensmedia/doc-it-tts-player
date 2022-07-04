@@ -166,6 +166,15 @@
     }
 }
 
+.tts-maximize svg,
+.tts-maximize span {
+    display: inline-block;
+}
+
+.tts-maximize svg { vertical-align: middle; }
+.tts-maximize svg + span { padding-right: $padding; }
+.tts-maximize span + svg { padding-left: $padding; }
+
 .tts-previous:disabled,
 .tts-next:disabled {
     opacity: .5;
@@ -194,7 +203,6 @@
 }
 
 $progress-bar-size: 12px;
-
 .tts-progress {
     position: relative;
     flex-grow: 1;

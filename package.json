@@ -1,6 +1,6 @@
 {
     "name": "@lensmedia/doc-it-tts-player",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "main": "dist/js/tts-player.js",
     "keywords": [],
     "author": "Jenne van der Meer <j.vandermeer@lensmedia.nl>",
