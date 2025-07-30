@@ -1,76 +1,52 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
+    mode: 'production',
     entry: {
-        js: './src/Main.ts',
-        css: './assets/scss/main.scss',
+        'tts-player': './src/Main.ts',
     },
     output: {
+        filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name]/tts-player.js',
-        libraryTarget: 'umd',
-        globalObject: 'this',
-        library: 'TtsPlayer',
+        clean: true,
+        library: {
+            name: 'TtsPlayer',
+            type: 'umd',
+            export: 'default',
+        },
     },
     module: {
-        rules: [
-            {
-                test: /\.[jt]sx?$/,
-                use: 'babel-loader',
-                exclude: /node_modules/,
+        rules: [ {
+            test: /\.[tj]s$/,
+            exclude: /node_modules/,
+            use: {
+                loader: 'babel-loader'
+            }
+        }, {
+            test: /\.(c|s[ac])ss$/i,
+            use: [
+                MiniCssExtractPlugin.loader,
+                'css-loader',
+                'sass-loader',
+            ],
+        }, {
+            test: /\.(png|gif|jpg|jpeg|svg|ttf|eot|woff2|mp\d|mov|mpe?g|avi|mkv)$/,
+            exclude: /node_modules/,
+            type: 'asset/resource',
+            generator: {
+                filename: module => module.filename.replace(/^assets\//, ''),
             },
-            {
-                test: /\.s?css$/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            // bit ugly but it is to keep it relative to the
-                            // assets/... folder instead of to the root.
-                            publicPath: '../../'
-                        }
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: { sourceMap: true },
-                    },
-                    { loader: 'postcss-loader' },
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            sourceMap: true,
-                        },
-                    },
-                ],
-            },
-        ],
-    },
-    optimization: {
-        minimizer: [
-            '...',
-            new CssMinimizerPlugin({
-                minimizerOptions: {
-                    preset: [
-                        'default',
-                        { calc: false },
-                    ]
-                }
-            }),
-        ],
+        }, {
+            resourceQuery: /source|inline|raw/,
+            type: 'asset/source',
+        }]
     },
     resolve: {
-        extensions: ['.ts', '.js'],
-    },
-    devtool: 'source-map',
-    devServer: {
-        host: '0.0.0.0',
+        extensions: [ '.vue', '.ts', '.js', '.scss' ],
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'css/tts-player.css',
-        }),
+        new MiniCssExtractPlugin(),
     ],
 };
