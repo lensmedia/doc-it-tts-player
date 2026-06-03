@@ -69,7 +69,7 @@ export default class Tts {
         for (let i = 0; i < this.timing.length; i++) {
             const timing = this.timing[i];
             const selector = `[data-tts="${timing.hash}"]:not([data-tts-index])`;
-            const el = document.querySelector<HTMLElement>(selector);
+            const el = this.content.querySelector<HTMLElement>(selector);
 
             if (!el) {
                 throw new Error('Timing list and document content do not match.');
@@ -331,7 +331,7 @@ export default class Tts {
     }
 
     private elementForTtsItem(item: TimingMetaInterface): HTMLElement {
-        return document.querySelector<HTMLElement>('[data-tts="' + item.hash + '"][data-tts-index="' + item.index + '"]');
+        return this.content.querySelector<HTMLElement>('[data-tts="' + item.hash + '"][data-tts-index="' + item.index + '"]');
     }
 
     private ttsItemForElement(element: HTMLElement): TimingMetaInterface {

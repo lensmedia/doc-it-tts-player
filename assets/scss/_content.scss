@@ -1,11 +1,9 @@
 @import 'variables';
 
 // Clickable text style.
-[data-tts] {
-    user-select: none;
-}
-
 [data-tts].tts-playable {
+    user-select: none;
+
     &:hover,
     &:active,
     &:focus {
@@ -15,7 +13,7 @@
 }
 
 // Now playing states.
-.tts-active {
+[data-tts].tts-active {
     color: var(--theme-text);
     background-color: rgba(black, .1);
 }
